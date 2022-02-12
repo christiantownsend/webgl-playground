@@ -1,10 +1,14 @@
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 import Playground from "./playground.js";
+
+import { UniformInput } from './components.js'
+
 import lineProgram from "./programs/lineProgram.js";
 import squareProgram from "./programs/squareProgram.js";
 import uvTestProgram from "./programs/uvTestProgram.js";
-import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
 
 createApp({
+    components: { UniformInput },
     data() {
         return {
             selected: null,
@@ -25,11 +29,15 @@ createApp({
         const gl = canvas.getContext('webgl2', {alpha: false});
         this.playground = new Playground(gl);
 
+        const playgroundConfig = {
+            upscale: 1.5,
+        }
+        this.playground.loadConfig(playgroundConfig);
+        
         this.selected = this.programs[0];
-
         this.playground.loadProgram(this.selected);
-        this.playground.startScene();
 
+        this.playground.startScene();
         this.playing = true;
     },
     watch: {

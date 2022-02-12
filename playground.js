@@ -13,9 +13,15 @@ const defaultUniforms = {
     },
 }
 
+const defaultConfig = {
+    upscale: 1,
+
+}
+
 export default class Playground {
     constructor(context) {
         this.gl = context;
+        this.config = {...defaultConfig};
         this.programInfo = {
             program: null,
             attribLocations: {
@@ -28,20 +34,24 @@ export default class Playground {
         this.animationFrame = null;
 
         const resizeObserver = new ResizeObserver(() => {
-            this.gl.canvas.width = window.innerWidth;
-            this.gl.canvas.height = window.innerHeight;
+            this.gl.canvas.width = window.innerWidth * this.config.upscale;
+            this.gl.canvas.height = window.innerHeight * this.config.upscale;
             this.programInfo.uniforms.aspectRatio.value = this.gl.canvas.width / this.gl.canvas.height;
         });
         resizeObserver.observe(document.body);
 
         window.addEventListener('mousemove', e => {
-            const pos = getNoPaddingNoBorderCanvasRelativeMousePosition(e, canvas);
+            const pos = getNoPaddingNoBorderCanvasRelativeMousePosition(e, this.gl.canvas);
         
-            const x = pos.x / canvas.width;
-            const y = 1 - ( pos.y / canvas.height );
+            const x = pos.x / this.gl.canvas.width;
+            const y = 1 - ( pos.y / this.gl.canvas.height );
         
             this.programInfo.uniforms.mousePos.value = [x, y];
         });
+    }
+
+    loadConfig(config) {
+        this.config = {...defaultConfig, ...config};
     }
 
     loadProgram(program) {

@@ -17,8 +17,8 @@ const frag = /* glsl */ `
     uniform vec2 mousePos;
     uniform float aspect;
     uniform float time;
-    uniform vec4 color;
 
+    uniform vec3 c_color;
     uniform float c_repeat;
     uniform float c_falloff;
     uniform float c_colorSpread;
@@ -28,6 +28,7 @@ const frag = /* glsl */ `
     ${shaderHelpers}
 
     void main() {
+        vec4 color = vec4(c_color, 1.0);
         float repeat = c_repeat;
         float falloff = c_falloff;
         float colorSpread = c_colorSpread;
@@ -68,9 +69,12 @@ export default {
     frag: frag,
     uniforms: {
         color: {
-            key: 'color',
-            value: [0.0, 1.0, 0.5, 1.0],
-            type: '4fv'
+            key: 'c_color',
+            value: [0.0, 1.0, 0.5],
+            type: '3fv',
+            max: 1,
+            min: 0,
+            increment: .1,
         },
         repeat: {
             key: 'c_repeat',

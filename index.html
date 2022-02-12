@@ -18,8 +18,8 @@
 
             <div v-for="(uniform, key) in playground.programInfo.uniforms" :key="uniform.key">
                 <div v-if="uniform.key.startsWith('c_')">
-                    <label :for="key">{{ key }}: </label>
-                    <input :id="key" type="number" v-model="uniform.value" :step="uniform.increment" :min="uniform.min" :max="uniform.max">
+                    <uniform-input v-model="uniform" :label="key"></uniform-input>
+                    <!-- <input :id="key" type="number" v-model="uniform.value" :step="uniform.increment" :min="uniform.min" :max="uniform.max"> -->
                 </div>
             </div>
             <button @click="togglePlaying">{{ playing ? 'Stop' : 'Start'}}</button>
@@ -53,7 +53,7 @@
 
         color: white;
     }
-    #controls * + * {
+    #controls > * + * {
         margin: 0;
         margin-top: 1rem;
     }
@@ -69,15 +69,31 @@
     select {
         width: 100%;
     }
-    button {
+    button, select {
         font-family: inherit;
         width: 100%;
-        /* outline: none;
         border: none;
-        padding: .5rem;
-        border-radius: 100px;
-        background: white; */
+        padding: .25rem;
+        border-radius: .25rem;
+        background: white;
         cursor: pointer;
+    }
+    
+    .input-group-label{
+        margin-block-end: 1rem;
+    }
+    .input-group > input {
+        border: 0;
+        padding: .25rem;
+        border-radius: 0;
+    }
+    .input-group > input:first-child {
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+    }
+    .input-group > input:last-child {
+        border-bottom-left-radius: .25rem;
+        border-bottom-right-radius: .25rem;
     }
 </style>
 </html>
