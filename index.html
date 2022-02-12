@@ -11,7 +11,11 @@
 <body>
     <div id="app">
         <div id="controls">
-            <h4>Program</h4>
+            <label for="program-select">Program</label>
+            <select v-model="selected" name="program-select">
+                <option v-for="program in programs" :key="program.displayName" :value="program">{{ program.displayName }}</option>
+            </select>
+
             <div v-for="(uniform, key) in playground.programInfo.uniforms" :key="uniform.key">
                 <div v-if="uniform.key.startsWith('c_')">
                     <label :for="key">{{ key }}: </label>
@@ -53,23 +57,26 @@
         margin: 0;
         margin-top: 1rem;
     }
-    #controls * + button {
+    #controls * + button, #controls select + * {
         margin-top: 2rem;
     }
     h1, h2, h3, h4, h5, h6, p, button {
         margin: 0;
     }
-    input, label, button {
+    input, label, button, select {
         display: block;
+    }
+    select {
+        width: 100%;
     }
     button {
         font-family: inherit;
         width: 100%;
-        outline: none;
+        /* outline: none;
         border: none;
         padding: .5rem;
         border-radius: 100px;
-        background: white;
+        background: white; */
         cursor: pointer;
     }
 </style>

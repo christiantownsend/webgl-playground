@@ -63,7 +63,7 @@ const frag = /* glsl */ `
 `;
 
 export default {
-    displayName: 'Lines',
+    displayName: 'Squares',
     vert: vert,
     frag: frag,
     uniforms: {
@@ -74,7 +74,7 @@ export default {
         },
         repeat: {
             key: 'c_repeat',
-            value: 20.0,
+            value: 10.0,
             type: '1f',
             min: 2,
         },
@@ -100,7 +100,13 @@ export default {
         },
         lineThickness: {
             key: 'c_lineThickness',
-            value: .05,
+            value: .25,
+            type: '1f',
+            increment: .05,
+        },
+        customFloat: {
+            key: 'c_customFloat',
+            value: .25,
             type: '1f',
             increment: .05,
         },

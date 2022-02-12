@@ -1,3 +1,18 @@
+const defaultUniforms = {
+    time: {
+        key: 'time',
+    },
+    aspectRatio: {
+        key: 'aspect',
+        type: '1f'
+    },
+    mousePos: {
+        key: 'mousePos',
+        value: [.5, .5],
+        type: '2fv'
+    },
+}
+
 export default class Playground {
     constructor(context) {
         this.gl = context;
@@ -6,20 +21,7 @@ export default class Playground {
             attribLocations: {
                 vertexPosition: null,
             },
-            uniforms: {
-                time: {
-                    key: 'time',
-                },
-                aspectRatio: {
-                    key: 'aspect',
-                    type: '1f'
-                },
-                mousePos: {
-                    key: 'mousePos',
-                    value: [.5, .5],
-                    type: '2fv'
-                },
-            }
+            uniforms: {...defaultUniforms}
         };
         this.buffers = this.initBuffers();
 
@@ -62,7 +64,7 @@ export default class Playground {
 
         this.programInfo.program = webGLProgram;
         this.programInfo.attribLocations.vertexPosition = gl.getAttribLocation(webGLProgram, 'position');
-        this.programInfo.uniforms = {...this.programInfo.uniforms, ...program.uniforms};
+        this.programInfo.uniforms = {...defaultUniforms, ...program.uniforms};
 
         for (let key in this.programInfo.uniforms) {
             const uniform = this.programInfo.uniforms[key];

@@ -1,17 +1,21 @@
 import Playground from "./playground.js";
 import lineProgram from "./programs/lineProgram.js";
-// import squareProgram from "./programs/squareProgram.js";
-import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+import squareProgram from "./programs/squareProgram.js";
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js';
 
 createApp({
     data() {
         return {
+            selected: null,
+            programs: [
+                lineProgram,
+                squareProgram
+            ],
             playground: {
                 programInfo: {},
             },
             playing: false,
             message: 'Hello World',
-            uniforms: {},
         }
     },
     mounted() {
@@ -19,9 +23,17 @@ createApp({
         const gl = canvas.getContext('webgl2', {alpha: false});
         this.playground = new Playground(gl);
 
-        this.playground.loadProgram(lineProgram);
+        this.selected = this.programs[0];
+
+        this.playground.loadProgram(this.selected);
         this.playground.startScene();
+
         this.playing = true;
+    },
+    watch: {
+        selected(newSelection) {
+            this.playground.loadProgram(newSelection);
+        }
     },
     methods: {
         togglePlaying: function() {
