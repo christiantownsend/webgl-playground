@@ -1,6 +1,6 @@
 export default /* glsl */`
 
-#define PI 3.14159265358979;
+const float PI = 3.14159265;
 
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
@@ -93,8 +93,29 @@ float snoise(vec3 v){
                                     dot(p2,x2), dot(p3,x3) ) );
 }
 
-vec2 rotateUV(vec2 uv, float rotation) {
+vec2 rotateUV(vec2 uv, float rotation)
+{
     float mid = 0.5;
+    float cosAngle = cos(rotation);
+    float sinAngle = sin(rotation);
+    return vec2(
+        cosAngle * (uv.x - mid) + sinAngle * (uv.y - mid) + mid,
+        cosAngle * (uv.y - mid) - sinAngle * (uv.x - mid) + mid
+    );
+}
+
+vec2 rotateUV(vec2 uv, float rotation, vec2 mid)
+{
+    float cosAngle = cos(rotation);
+    float sinAngle = sin(rotation);
+    return vec2(
+        cosAngle * (uv.x - mid.x) + sinAngle * (uv.y - mid.y) + mid.x,
+        cosAngle * (uv.y - mid.y) - sinAngle * (uv.x - mid.x) + mid.y
+    );
+}
+
+vec2 rotateUV(vec2 uv, float rotation, float mid)
+{
     float cosAngle = cos(rotation);
     float sinAngle = sin(rotation);
     return vec2(
