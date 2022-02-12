@@ -45,13 +45,19 @@
     }
     #controls {
         position: fixed;
-        inset: 1rem 1rem auto auto;
+        inset: 1rem 1rem 1rem auto;
         background-color: rgba(0 0 0 / .75);
-        border-radius: .5rem;
+        border-radius: 1rem;
         border: 1px solid rgba(255 255 255 / .25);
-        padding: 1.25rem;
+        padding: 1rem;
 
         color: white;
+
+        /* bottom: auto; */
+
+        overflow-y: auto;
+        height: min-content;
+        max-height: calc(100% - 4rem);
     }
     #controls > * + * {
         margin: 0;
@@ -60,6 +66,16 @@
     #controls * + button, #controls select + * {
         margin-top: 2rem;
     }
+
+    #controls::-webkit-scrollbar {
+        display: none;
+    }
+
+    #controls {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
     h1, h2, h3, h4, h5, h6, p, button {
         margin: 0;
     }
