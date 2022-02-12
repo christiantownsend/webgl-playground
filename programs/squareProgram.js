@@ -22,8 +22,7 @@ const frag = /* glsl */ `
     uniform float c_repeat;
     uniform float c_falloff;
     uniform float c_colorSpread;
-    uniform float c_lineLength;
-    uniform float c_lineThickness;
+    uniform float c_squareSize;
 
     ${shaderHelpers}
 
@@ -31,8 +30,8 @@ const frag = /* glsl */ `
         float repeat = c_repeat;
         float falloff = c_falloff;
         float colorSpread = c_colorSpread;
-        float lineLength = c_lineLength;
-        float lineThickness = c_lineThickness;
+        float lineLength = c_squareSize;
+        float lineThickness = c_squareSize;
         
         vec2 newTexCoords = (texCoords - .5) * vec2(aspect, 1.0);
         vec2 newMouseCoords = (mousePos - .5) * vec2(aspect, 1.0);
@@ -69,12 +68,12 @@ export default {
     uniforms: {
         color: {
             key: 'color',
-            value: [0.0, 1.0, 0.5, 1.0],
+            value: [1.0, 1.0, 0.0, 1.0],
             type: '4fv'
         },
         repeat: {
             key: 'c_repeat',
-            value: 10.0,
+            value: 20.0,
             type: '1f',
             min: 2,
         },
@@ -92,21 +91,9 @@ export default {
             min: .01,
             max: .99,
         },
-        lineLength: {
-            key: 'c_lineLength',
-            value: .25,
-            type: '1f',
-            increment: .05,
-        },
-        lineThickness: {
-            key: 'c_lineThickness',
-            value: .25,
-            type: '1f',
-            increment: .05,
-        },
-        customFloat: {
-            key: 'c_customFloat',
-            value: .25,
+        squareSize: {
+            key: 'c_squareSize',
+            value: .4,
             type: '1f',
             increment: .05,
         },
