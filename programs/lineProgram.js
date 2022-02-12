@@ -74,27 +74,34 @@ export default {
         repeat: {
             key: 'c_repeat',
             value: 20.0,
-            type: '1f'
+            type: '1f',
+            min: 2,
         },
         falloff: {
             key: 'c_falloff',
             value: 12.0,
-            type: '1f'
+            type: '1f',
+            min: 0,
         },
         colorSpread: {
             key: 'c_colorSpread',
             value: .75,
-            type: '1f'
+            type: '1f',
+            increment: .05,
+            min: .01,
+            max: .99,
         },
         lineLength: {
             key: 'c_lineLength',
             value: .25,
-            type: '1f'
+            type: '1f',
+            increment: .05,
         },
         lineThickness: {
             key: 'c_lineThickness',
             value: .05,
-            type: '1f'
+            type: '1f',
+            increment: .05,
         },
     },
 }

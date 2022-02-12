@@ -15,7 +15,7 @@
             <div v-for="(uniform, key) in playground.programInfo.uniforms" :key="uniform.key">
                 <div v-if="uniform.key.startsWith('c_')">
                     <label :for="key">{{ key }}: </label>
-                    <input :id="key" type="number" v-model="uniform.value">
+                    <input :id="key" type="number" v-model="uniform.value" :step="uniform.increment" :min="uniform.min" :max="uniform.max">
                 </div>
             </div>
             <button @click="togglePlaying">{{ playing ? 'Stop' : 'Start'}}</button>
