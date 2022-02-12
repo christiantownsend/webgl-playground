@@ -1,32 +1,54 @@
 import Playground from "./playground.js";
 import lineProgram from "./programs/lineProgram.js";
+// import squareProgram from "./programs/squareProgram.js";
+import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
 
-const canvas = document.getElementById('canvas');
+createApp({
+    data() {
+        return {
+            playground: {
+                programInfo: {},
+            },
+            playing: false,
+            message: 'Hello World',
+            uniforms: {},
+        }
+    },
+    mounted() {
+        const canvas = document.getElementById('canvas');
+        const gl = canvas.getContext('webgl2', {alpha: false});
+        this.playground = new Playground(gl);
 
-const gl = canvas.getContext('webgl2', {alpha: false});
-if (gl === null) {
-    console.error('Unable to init WebGL. Your browser or machine may not support it.');
-}
+        this.playground.loadProgram(lineProgram);
+        this.playground.startScene();
+        this.playing = true;
+    },
+    methods: {
+        togglePlaying: function() {
+            if (this.playing) {
+                this.playground.stopScene();
+            }
+            else {
+                this.playground.startScene();
+            }
 
-const pg = new Playground(gl);
-
-// const squares = pg.loadProgram(squareProgram);
-const lines = pg.loadProgram(lineProgram);
-
-pg.startScene();
-
-let playing = true;
-
-canvas.addEventListener('click', () => {
-    // pg.programInfo.uniforms.repeat.value = Math.floor(Math.random() * 25) * 2;
-    // pg.programInfo.uniforms.color.value = [Math.random(), Math.random(), Math.random(), 1.0];
-
-    if (playing) {
-        pg.stopScene();
-        playing = false;
+            this.playing = !this.playing;
+        }
     }
-    else {
-        pg.startScene();
-        playing = true;
-    }
-})
+}).mount('#app');
+
+// let playing = true;
+
+// canvas.addEventListener('click', () => {
+//     // pg.programInfo.uniforms.repeat.value = Math.floor(Math.random() * 25) * 2;
+//     // pg.programInfo.uniforms.color.value = [Math.random(), Math.random(), Math.random(), 1.0];
+
+//     if (playing) {
+//         pg.stopScene();
+//         playing = false;
+//     }
+//     else {
+//         pg.startScene();
+//         playing = true;
+//     }
+// })

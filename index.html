@@ -9,7 +9,19 @@
     <script type="module" src="app.js" defer></script>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
+    <div id="app">
+        <div id="controls">
+            <h4>Program</h4>
+            <div v-for="(uniform, key) in playground.programInfo.uniforms" :key="uniform.key">
+                <div v-if="uniform.key.startsWith('c_')">
+                    <label :for="key">{{ key }}: </label>
+                    <input :id="key" type="number" v-model="uniform.value">
+                </div>
+            </div>
+            <button @click="togglePlaying">{{ playing ? 'Stop' : 'Start'}}</button>
+        </div>
+        <canvas id="canvas"></canvas>
+    </div>
 </body>
 <style>
     html, body {
@@ -20,11 +32,45 @@
         min-height: 100vh;
         overflow: hidden;
         background: black;
+        font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
     canvas {
         display: block;
         width: 100%;
         height: 100%;
+    }
+    #controls {
+        position: fixed;
+        inset: 1rem 1rem auto auto;
+        background-color: rgba(0 0 0 / .75);
+        border-radius: .5rem;
+        border: 1px solid rgba(255 255 255 / .25);
+        padding: 1.25rem;
+
+        color: white;
+    }
+    #controls * + * {
+        margin: 0;
+        margin-top: 1rem;
+    }
+    #controls * + button {
+        margin-top: 2rem;
+    }
+    h1, h2, h3, h4, h5, h6, p, button {
+        margin: 0;
+    }
+    input, label, button {
+        display: block;
+    }
+    button {
+        font-family: inherit;
+        width: 100%;
+        outline: none;
+        border: none;
+        padding: .5rem;
+        border-radius: 100px;
+        background: white;
+        cursor: pointer;
     }
 </style>
 </html>

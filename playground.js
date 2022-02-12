@@ -21,7 +21,7 @@ export default class Playground {
                 },
             }
         };
-        this.buffers = this.#initBuffers();
+        this.buffers = this.initBuffers();
 
         this.animationFrame = null;
 
@@ -46,8 +46,8 @@ export default class Playground {
 
         const gl = this.gl;
 
-        const vertexShader = this.#loadShader(gl.VERTEX_SHADER, program.vert);
-        const fragmentShader = this.#loadShader(gl.FRAGMENT_SHADER, program.frag);
+        const vertexShader = this.loadShader(gl.VERTEX_SHADER, program.vert);
+        const fragmentShader = this.loadShader(gl.FRAGMENT_SHADER, program.frag);
 
 
         const webGLProgram = gl.createProgram();
@@ -72,7 +72,7 @@ export default class Playground {
         return this.programInfo;
     }
 
-    #loadShader(type, source) {
+    loadShader(type, source) {
 
         const gl = this.gl;
 
@@ -91,7 +91,7 @@ export default class Playground {
         return shader;
     }
 
-    #initBuffers() {
+    initBuffers() {
 
         const gl = this.gl;
 
