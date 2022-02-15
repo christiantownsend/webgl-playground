@@ -33,12 +33,17 @@ export default class Playground {
 
         this.animationFrame = null;
 
-        const resizeObserver = new ResizeObserver(() => {
-            this.gl.canvas.width = window.innerWidth * this.config.upscale;
-            this.gl.canvas.height = window.innerHeight * this.config.upscale;
-            this.programInfo.uniforms.aspectRatio.value = this.gl.canvas.width / this.gl.canvas.height;
+        const resizeObserver = new ResizeObserver((e) => {
+            console.log(e);
+            const width = e[0].contentRect.width * this.config.upscale;
+            const height = e[0].contentRect.height * this.config.upscale;
+            // const width = e[0].devicePixelContentBoxSize[0].inlineSize * this.config.upscale;
+            // const height = e[0].devicePixelContentBoxSize[0].blockSize * this.config.upscale;
+            this.gl.canvas.width = width;
+            this.gl.canvas.height = height;
+            this.programInfo.uniforms.aspectRatio.value = width / height;
         });
-        resizeObserver.observe(document.body);
+        resizeObserver.observe(this.gl.canvas.parentElement);
 
         window.addEventListener('mousemove', e => {
             const pos = getNoPaddingNoBorderCanvasRelativeMousePosition(e, this.gl.canvas);

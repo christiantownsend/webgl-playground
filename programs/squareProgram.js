@@ -1,4 +1,4 @@
-import shaderHelpers from './shaderHelpers.js'
+import { constants, functions } from './shaderHelpers.js'
 
 const vert = /* glsl */ `
     attribute vec2 position;
@@ -13,6 +13,8 @@ const vert = /* glsl */ `
 const frag = /* glsl */ `
     precision highp float;
 
+    ${constants}
+
     varying vec2 texCoords;
     uniform vec2 mousePos;
     uniform float aspect;
@@ -24,7 +26,7 @@ const frag = /* glsl */ `
     uniform float c_colorSpread;
     uniform float c_squareSize;
 
-    ${shaderHelpers}
+    ${functions}
 
     void main() {
         vec4 color = vec4(c_color, 1.0);

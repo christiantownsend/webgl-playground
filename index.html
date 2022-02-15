@@ -6,11 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebGL Playground</title>
     <link rel="shortcut icon" href="static/favicon.svg" type="image/svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet"> 
     <script type="module" src="app.js" defer></script>
 </head>
 <body>
     <div id="app">
-        <div id="controls">
+        <div v-if="open" id="controls">
             <label for="program-select">Program</label>
             <select v-model="selected" name="program-select">
                 <option v-for="program in programs" :key="program.displayName" :value="program">{{ program.displayName }}</option>
@@ -24,41 +27,79 @@
             </div>
             <button @click="togglePlaying">{{ playing ? 'Stop' : 'Start'}}</button>
         </div>
-        <canvas id="canvas"></canvas>
+        <div class="canvas-wrapper">
+            <button id="nav-toggle" @click="toggleControls">
+                <img v-if="open" src="./static/close-icon.svg" alt="close controls">
+                <img v-else src="./static/menu-icon.svg" alt="open controls">
+            </button>
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
 </body>
 <style>
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bg-color: #efefef;
+        --fg-color: #222222;
+
+        --font-stack: 'Inter', sans-serif;
+    }
+
     html, body {
         margin: 0;
         padding: 0;
     }
     body {
-        min-height: 100vh;
-        overflow: hidden;
+        height: 100vh;
         background: black;
-        font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        /* font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+        font-family: var(--font-stack);
+        font-weight: 500;
+        text-transform: uppercase;
+        position: relative;
+        font-size: 14px;
     }
-    canvas {
-        display: block;
+    #app {
+        position: absolute;
+        display: flex;
         width: 100%;
         height: 100%;
     }
-    #controls {
-        position: fixed;
-        inset: 1rem 1rem 1rem auto;
-        background-color: rgba(0 0 0 / .75);
-        border-radius: 1rem;
-        border: 1px solid rgba(255 255 255 / .25);
-        padding: 1rem;
 
-        color: white;
-
-        /* bottom: auto; */
-
-        overflow-y: auto;
-        height: min-content;
-        max-height: calc(100% - 4rem);
+    .canvas-wrapper {
+        flex-grow: 1;
+        overflow: hidden;
+        position: relative;
     }
+
+    #nav-toggle {
+        position: absolute;
+        inset: 0 0 auto auto;
+        width: 2rem;
+        height: 2rem;
+        color: var(--fg-color);
+        background: var(--bg-color);
+        border: none;
+        padding: .4rem;
+    }
+
+    #canvas {
+        width: 100%;
+        height: 100%;
+    }
+
+    #controls {
+        padding: 2rem;
+        color: var(--fg-color);
+        background: var(--bg-color);
+        order: 2;
+        max-height: 100%;
+        overflow-y: auto;
+    }
+
     #controls > * + * {
         margin: 0;
         margin-top: 1rem;
@@ -79,37 +120,41 @@
     h1, h2, h3, h4, h5, h6, p, button {
         margin: 0;
     }
-    input, label, button, select {
+
+    label {
+        font-size: .9em;
+        letter-spacing: .1ch;
         display: block;
-    }
-    select {
-        width: 100%;
-    }
-    button, select {
-        font-family: inherit;
-        width: 100%;
-        border: none;
-        padding: .25rem;
-        border-radius: .25rem;
-        background: white;
-        cursor: pointer;
-    }
-    
-    .input-group-label{
+        font-weight: 700;
         margin-block-end: 1rem;
     }
-    .input-group > input {
-        border: 0;
-        padding: .25rem;
+
+    input, button, select {
+        display: block;
+        width: 100%;
+        font-family: inherit;
+        font-weight: 400;
+        border: 2px solid var(--fg-color);
+        padding: .4rem;
         border-radius: 0;
+        background: var(--bg-color);
     }
-    .input-group > input:first-child {
-        border-top-left-radius: .25rem;
-        border-top-right-radius: .25rem;
+
+    button, select {
+        cursor: pointer;
     }
-    .input-group > input:last-child {
-        border-bottom-left-radius: .25rem;
-        border-bottom-right-radius: .25rem;
+
+    button {
+        color: var(--bg-color);
+        background: var(--fg-color);
+    }
+
+    .input-group {
+        font-family: var(--font-stack);
+    }
+
+    .input-group > input:not(:last-child) {
+        border-bottom: 0;
     }
 </style>
 </html>

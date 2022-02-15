@@ -22,6 +22,7 @@ createApp({
             },
             playing: false,
             message: 'Hello World',
+            open: false,
         }
     },
     mounted() {
@@ -39,10 +40,16 @@ createApp({
 
         this.playground.startScene();
         this.playing = true;
+        console.log(localStorage.getItem('open'));
+        this.open = JSON.parse(localStorage.getItem('open'));
     },
     watch: {
         selected(newSelection) {
             this.playground.loadProgram(newSelection);
+        },
+        open() {
+            localStorage.setItem('open', this.open);
+            // console.log(localStorage.getItem('open'));
         }
     },
     methods: {
@@ -55,6 +62,9 @@ createApp({
             }
 
             this.playing = !this.playing;
+        },
+        toggleControls: function() {
+            this.open = !this.open;
         }
     }
 }).mount('#app');
